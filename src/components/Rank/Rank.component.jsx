@@ -7,7 +7,7 @@ const Rank = ({name, entries}) => {
 				{`${name} , your current entry count is...`}
 			</div>
 			<div className='white f1'>
-				{entries}
+				{console.log(`My Entries are: ${entries}`)}
 			</div>
 		</div>
 	);
