@@ -9,8 +9,6 @@ import SignIn from './components/SignIn/SignIn.component';
 import Register from './components/Register/Register.component';
 import './App.css';
 
-export const BACKEND_URL = process.env.BACKEND_URL;
-
 const particlesOptions = {
   particles: {
       number: {
@@ -79,7 +77,7 @@ class App extends React.Component {
 
     onButtonSubmit = () => {
       this.setState({imageUrl: this.state.input});
-        fetch(`${BACKEND_URL}/imageurl`, {
+        fetch(`https://smart-brain-app-x73814-1b05e9cdf5f3.herokuapp.com/imageurl`, {
             method: 'post',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
@@ -89,7 +87,7 @@ class App extends React.Component {
         .then(response => response.json())
         .then(response => {
           if (response) {
-            fetch(`${BACKEND_URL}/image`, {
+            fetch(`https://smart-brain-app-x73814-1b05e9cdf5f3.herokuapp.com/image`, {
               method: 'put',
               headers: {'Content-Type': 'application/json'},
               body: JSON.stringify({

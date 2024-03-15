@@ -1,5 +1,4 @@
 import React from 'react';
-import {BACKEND_URL} from "../../App";
 
 class Register extends React.Component {
 	constructor(props) {
@@ -23,7 +22,7 @@ class Register extends React.Component {
 	}
 
 	onSubmitRegister = () => {
-		fetch(`${BACKEND_URL}/register`, {
+		fetch(`https://smart-brain-app-x73814-1b05e9cdf5f3.herokuapp.com/register`, {
 			method: 'post',
 			headers: {'Content-Type': 'application/json'},
 			body: JSON.stringify({
