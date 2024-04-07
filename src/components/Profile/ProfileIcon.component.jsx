@@ -7,7 +7,7 @@ import {
 } from 'reactstrap';
 import profilePicture from './Profile_Final.png';
 
-const ProfileIcon = ({ direction, ...args }) => {
+const ProfileIcon = ({ direction, onRouteChange, toggleModal, ...args }) => {
     const [dropdownOpen, setDropdownOpen] = useState(false);
 
     const toggle = () => setDropdownOpen((prevState) => !prevState);
@@ -27,11 +27,11 @@ const ProfileIcon = ({ direction, ...args }) => {
                 </DropdownToggle>
                 <DropdownMenu
                     className="b--transparent shadow-5"
-                    style={{ marginTop: "20px", backgroundColor: "rgba(255, 255, 255, 0.5)"}}
+                    style={{ marginTop: "20px", backgroundColor: "rgba(255, 255, 255, 0.5)" }}
                     {...args}
                 >
-                    <DropdownItem>View Profile</DropdownItem>
-                    <DropdownItem>Signout</DropdownItem>
+                    <DropdownItem onClick={toggleModal}>View Profile</DropdownItem>
+                    <DropdownItem onClick={() => onRouteChange('signout')}>Sign Out</DropdownItem>
                 </DropdownMenu>
             </Dropdown>
         </div>

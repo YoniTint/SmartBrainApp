@@ -7,6 +7,8 @@ import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm.component';
 import Rank from './components/Rank/Rank.component';
 import SignIn from './components/SignIn/SignIn.component';
 import Register from './components/Register/Register.component';
+import Modal from './components/Modal/Modal.component';
+import Profile from './components/Profile/Profile.component';
 import './App.css';
 
 const particlesOptions = {
@@ -25,14 +27,17 @@ const initialState = {
         input: '',
         imageUrl: '',
         boxes: [],
-        route: 'home',
-        isSignedIn: true,
+        route: 'signin',
+        isSignedIn: false,
+        isProfileOpen: false,
         user: {
           id: '',
           name: '', 
           email: '',
           entries: 0,
-          joined: ''
+          joined: '',
+            age: '',
+            pet: ''
         }
 }        
 
@@ -109,22 +114,41 @@ class App extends React.Component {
 
     onRouteChange = (route) => {
       if(route === 'signout') {
-        this.setState(initialState)
+        return this.setState(initialState)
       } else if (route === 'home') {
         this.setState({isSignedIn: true})
       }
       this.setState({ route: route });
     }
 
+    toggleModal = () => {
+        this.setState(prevState => ({
+            ...prevState,
+            isProfileOpen: !prevState.isProfileOpen
+        }))
+    }
+
     render() {
-        const { isSignedIn, imageUrl, route, boxes } = this.state;
+        const { isSignedIn, imageUrl, route, boxes, isProfileOpen, user } = this.state;
         return (
           <div className="App">
             <Particles 
               className='particles'
               params={particlesOptions}
             />
-            <Navigation isSignedIn={isSignedIn} onRouteChange={this.onRouteChange} />
+            <Navigation
+                isSignedIn={isSignedIn}
+                onRouteChange={this.onRouteChange}
+                toggleModal={this.toggleModal}
+            />
+              { isProfileOpen &&
+                  <Modal>
+                      <Profile
+                          isProfileOpen={isProfileOpen}
+                          toggleModal={this.toggleModal}
+                          user={user}
+                      />
+                  </Modal>}
             { route === 'home' 
               ? <div>
                     <Logo />
