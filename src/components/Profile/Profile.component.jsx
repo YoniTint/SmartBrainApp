@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import profilePicture from "./avatar.png";
+import profilePicture from "./batman.png";
 import './Profile.styles.css';
 const Profile = ({ isProfileOpen, toggleModal, loadUser, user }) => {
     const [name, setName] = useState(user.name);
