@@ -22,6 +22,10 @@ class Register extends React.Component {
 		this.setState({password: event.target.value});
 	}
 
+    saveAuthTokenInSession = (token) => {
+        window.sessionStorage.setItem('token', token);
+    }
+
 	onSubmitRegister = () => {
 		fetch(`http://localhost:3001/register`, {
 			method: 'post',
