@@ -1,0 +1,4 @@
+/* using important just for experimenting in order to override bootstrap styling*/
+.hover-black:hover {
+    background-color: #000 !important;
+}

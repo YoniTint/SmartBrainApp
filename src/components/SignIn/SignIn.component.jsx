@@ -1,4 +1,5 @@
 import React from 'react';
+import './SignIn.styles.css';
 
 class SignIn extends React.Component {
 	constructor(props) {
@@ -17,6 +18,10 @@ class SignIn extends React.Component {
 		this.setState({signInPassword: event.target.value});
 	}
 
+    saveAuthTokenInSession = (token) => {
+        window.sessionStorage.setItem('token', token);
+    }
+
 	onSubmitSignIn = () => {
 		fetch(`http://localhost:3001/signin`, {
 			method: 'post',
@@ -27,11 +32,25 @@ class SignIn extends React.Component {
 			})
 		})
 			.then(response => response.json())
-			.then(user => {
-				if(user.id) {
-					this.props.loadUser(user);
-					this.props.onRouteChange('home');
-				}
+			.then(data => {
+				if(data.userId && data.success === 'true') {
+                    this.saveAuthTokenInSession(data.token)
+                    fetch(`http://localhost:3001/profile/${data.userId}`,
+                        {
+                            method: 'get',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': data.token
+                            }
+                        })
+                        .then(resp => resp.json())
+                        .then(user => {
+                            if (user && user.email) {
+                                this.props.loadUser(user);
+                                this.props.onRouteChange('home');
+                            }
+                        })
+                    }
 			})
 	}
 
@@ -47,7 +66,7 @@ class SignIn extends React.Component {
 				        <label className="db fw6 lh-copy f6" htmlFor="email-address">Email</label>
 				        <input 
 				        	onChange={this.onEmailChange}
-				        	className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" 
+				        	className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100 hover-black"
 				        	type="email" 
 				        	name="email-address"  
 				        	id="email-address"
@@ -57,7 +76,7 @@ class SignIn extends React.Component {
 				        <label className="db fw6 lh-copy f6" htmlFor="password">Password</label>
 				        <input 
 				        	onChange={this.onPasswordChange}
-				        	className="b pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" 
+				        	className="b pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100 hover-black"
 				        	type="password" 
 				        	name="password"  
 				        	id="password"
