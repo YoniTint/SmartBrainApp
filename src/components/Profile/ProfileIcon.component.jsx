@@ -5,7 +5,7 @@ import {
     DropdownMenu,
     DropdownItem,
 } from 'reactstrap';
-import profilePicture from './Profile_Final.png';
+import profilePicture from './avatar.png';
 
 const ProfileIcon = ({ direction, onRouteChange, toggleModal, ...args }) => {
     const [dropdownOpen, setDropdownOpen] = useState(false);
