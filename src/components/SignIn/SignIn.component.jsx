@@ -23,7 +23,7 @@ class SignIn extends React.Component {
     }
 
 	onSubmitSignIn = () => {
-		fetch(`http://localhost:3001/signin`, {
+		fetch(`https://smart-brain-app-x73814-1b05e9cdf5f3.herokuapp.com/signin`, {
 			method: 'post',
 			headers: {'Content-Type': 'application/json'},
 			body: JSON.stringify({
@@ -35,7 +35,7 @@ class SignIn extends React.Component {
 			.then(data => {
 				if(data.userId && data.success === 'true') {
                     this.saveAuthTokenInSession(data.token)
-                    fetch(`http://localhost:3001/profile/${data.userId}`,
+                    fetch(`https://smart-brain-app-x73814-1b05e9cdf5f3.herokuapp.com/profile/${data.userId}`,
                         {
                             method: 'get',
                             headers: {

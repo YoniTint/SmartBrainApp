@@ -16,7 +16,7 @@ const Profile = ({ isProfileOpen, toggleModal, loadUser, user }) => {
     }
 
     const onProfileUpdate = (data) => {
-        fetch(`http://localhost:3001/profile/${user.id}`, {
+        fetch(`https://smart-brain-app-x73814-1b05e9cdf5f3.herokuapp.com/profile/${user.id}`, {
                 method: 'post',
                 headers: {
                     'Content-Type': 'application/json',

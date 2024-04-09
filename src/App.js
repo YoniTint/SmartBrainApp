@@ -51,7 +51,7 @@ class App extends React.Component {
     componentDidMount() {
         const token = window.sessionStorage.getItem('token');
         if (token) {
-            fetch('http://localhost:3001/signin', {
+            fetch('https://smart-brain-app-x73814-1b05e9cdf5f3.herokuapp.com/signin', {
                 method: 'post',
                 headers: {
                     'Content-Type': 'application/json',
@@ -61,7 +61,7 @@ class App extends React.Component {
                 .then(resp => resp.json())
                 .then(data => {
                     if (data && data.id) {
-                        fetch(`http://localhost:3001/profile/${data.id}`,
+                        fetch(`https://smart-brain-app-x73814-1b05e9cdf5f3.herokuapp.com/profile/${data.id}`,
                             {
                                 method: 'get',
                                 headers: {
@@ -122,7 +122,7 @@ class App extends React.Component {
 
     onButtonSubmit = () => {
       this.setState({imageUrl: this.state.input});
-        fetch(`http://localhost:3001/imageurl`, {
+        fetch(`https://smart-brain-app-x73814-1b05e9cdf5f3.herokuapp.com/imageurl`, {
             method: 'post',
             headers: {
                 'Content-Type': 'application/json',
@@ -135,7 +135,7 @@ class App extends React.Component {
         .then(response => response.json())
         .then(response => {
           if (response && response !== 'unable to work with API') {
-            fetch(`http://localhost:3001/image`, {
+            fetch(`https://smart-brain-app-x73814-1b05e9cdf5f3.herokuapp.com/image`, {
               method: 'put',
               headers: {
                   'Content-Type': 'application/json',

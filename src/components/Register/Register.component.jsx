@@ -27,7 +27,7 @@ class Register extends React.Component {
     }
 
 	onSubmitRegister = () => {
-		fetch(`http://localhost:3001/register`, {
+		fetch(`https://smart-brain-app-x73814-1b05e9cdf5f3.herokuapp.com/register`, {
 			method: 'post',
 			headers: {'Content-Type': 'application/json'},
 			body: JSON.stringify({
@@ -40,7 +40,7 @@ class Register extends React.Component {
             .then(data => {
                 if(data.userId && data.success === 'true') {
                     this.saveAuthTokenInSession(data.token)
-                    fetch(`http://localhost:3001/profile/${data.userId}`,
+                    fetch(`https://smart-brain-app-x73814-1b05e9cdf5f3.herokuapp.com/profile/${data.userId}`,
                         {
                             method: 'get',
                             headers: {
