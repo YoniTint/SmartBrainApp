@@ -48,6 +48,40 @@ class App extends React.Component {
       this.state = initialState;
     }
 
+    componentDidMount() {
+        const token = window.sessionStorage.getItem('token');
+        if (token) {
+            fetch('http://localhost:3001/signin', {
+                method: 'post',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': token
+                }
+            })
+                .then(resp => resp.json())
+                .then(data => {
+                    if (data && data.id) {
+                        fetch(`http://localhost:3001/profile/${data.id}`,
+                            {
+                                method: 'get',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'Authorization': token
+                                }
+                            })
+                            .then(resp => resp.json())
+                            .then(user => {
+                                if (user && user.email) {
+                                    this.loadUser(user);
+                                    this.onRouteChange('home');
+                                }
+                            })
+                    }
+                })
+                .catch(console.log)
+        }
+    }
+
     loadUser = (data) => {
       this.setState({user: {
         id: data.id,
@@ -59,23 +93,27 @@ class App extends React.Component {
     }
 
     calculateFaceLocation = (data) => {
-        const image = document.getElementById('inputimage');
-        const width = Number(image.width);
-        const height = Number(image.height);
+        if (data && data.outputs) {
+            const image = document.getElementById('inputimage');
+            const width = Number(image.width);
+            const height = Number(image.height);
 
-        return data.outputs[0].data.regions.map(face => {
-            const clarifaiFace = face.region_info.bounding_box;
-            return {
-                leftCol: clarifaiFace.left_col * width,
-                topRow: clarifaiFace.top_row * height,
-                rightCol: width - (clarifaiFace.right_col * width),
-                bottomRow: height - (clarifaiFace.bottom_row * height)
-            }
-        });
+            return data.outputs[0].data.regions.map(face => {
+                const clarifaiFace = face.region_info.bounding_box;
+                return {
+                    leftCol: clarifaiFace.left_col * width,
+                    topRow: clarifaiFace.top_row * height,
+                    rightCol: width - (clarifaiFace.right_col * width),
+                    bottomRow: height - (clarifaiFace.bottom_row * height)
+                }
+            });
+        }
     }
 
     displayFaceBoxes = boxes => {
-      this.setState({boxes: boxes});
+      if (boxes) {
+        this.setState({boxes: boxes});
+      }
     }
 
     onInputChange = (event) => {
@@ -86,7 +124,10 @@ class App extends React.Component {
       this.setState({imageUrl: this.state.input});
         fetch(`http://localhost:3001/imageurl`, {
             method: 'post',
-            headers: {'Content-Type': 'application/json'},
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': window.sessionStorage.getItem('token')
+            },
             body: JSON.stringify({
               input: this.state.input
             }) 
@@ -96,7 +137,10 @@ class App extends React.Component {
           if (response && response !== 'unable to work with API') {
             fetch(`http://localhost:3001/image`, {
               method: 'put',
-              headers: {'Content-Type': 'application/json'},
+              headers: {
+                  'Content-Type': 'application/json',
+                  'Authorization': window.sessionStorage.getItem('token')
+              },
               body: JSON.stringify({
                 id: this.state.user.id
               }) 
