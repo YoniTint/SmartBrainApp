@@ -3,20 +3,12 @@ import profilePicture from "./Profile_Final.png";
 import './Profile.styles.css';
 const Profile = ({ isProfileOpen, toggleModal, loadUser, user }) => {
     const [name, setName] = useState(user.name);
-    const [age, setAge] = useState(user.age);
-    const [pet, setPet] = useState(user.pet);
 
     const onFormChange = (event) => {
         const { value } = event.target;
         switch(event.target.name) {
             case 'user-name':
                 setName(value);
-                break;
-            case 'user-age':
-                setAge(value);
-                break;
-            case 'user-pet':
-                setPet(value);
                 break;
             default:
                 return;
@@ -63,27 +55,9 @@ const Profile = ({ isProfileOpen, toggleModal, loadUser, user }) => {
                       name="user-name"
                       id="name"
                   />
-                  <label className="mt2 fw6" htmlFor="user-age">Age:</label>
-                  <input
-                      onChange={onFormChange}
-                      className="pa2 ba w-100"
-                      placeholder={age}
-                      type="text"
-                      name="user-age"
-                      id="age"
-                  />
-                  <label className="mt2 fw6" htmlFor="user-pet">Pet:</label>
-                  <input
-                      onChange={onFormChange}
-                      className="pa2 ba w-100"
-                      placeholder={pet}
-                      type="text"
-                      name="user-pet"
-                      id="pet"
-                  />
                   <div className="mt4" style={{ display: 'flex', justifyContent: 'space-evenly' }}>
                       <button
-                          onClick={() => onProfileUpdate({ name, age, pet })}
+                          onClick={() => onProfileUpdate({ name })}
                           className="b pa2 grow pointer hover-white w-40 bg-light-blue b--black-20"
                       >
                           Save
